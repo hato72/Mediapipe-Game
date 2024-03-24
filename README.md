@@ -1,3 +1,3 @@
-#### mediapipe-game
+## mediapipe-game
 
 #### 制作中
