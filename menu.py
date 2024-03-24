@@ -1,0 +1,21 @@
+import pygame
+import sys
+from env import *
+from draw_image import *
+
+class Menu:
+    def __init__(self,surface):
+        self.surface = surface
+        
+    def draw(self):
+        draw_text(self.surface,TITLE,(screen_width//2,120),COLORS["title"],font=FONT["medium"],shadow = True,shadow_color = (255,255,255), pos_mode="center")
+
+    def update(self):
+        self.draw()
+        
+        if button(self.surface,320,"Start"):
+            return "game"
+        
+        if button(self.surface, 320+button_size[1]*1.5, "Quit"):
+            pygame.quit()
+            sys.exit()
