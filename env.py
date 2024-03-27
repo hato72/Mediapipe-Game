@@ -14,6 +14,7 @@ hitbox = False
 FPS = 90
 
 anim_speed = 3
+dulation = 60
 
 TITLE = "Hand_Tracking_Game"
 
