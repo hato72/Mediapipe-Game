@@ -2,12 +2,15 @@ import pygame
 import sys
 from env import *
 from draw_image import *
+from background import Background
 
 class Menu:
     def __init__(self,surface):
         self.surface = surface
+        self.background = Background()
         
     def draw(self):
+        self.background.draw(self.surface)
         draw_text(self.surface,TITLE,(screen_width//2,120),COLORS["title"],font=FONT["medium"],shadow = True,shadow_color = (255,255,255), pos_mode="center")
 
     def update(self):
