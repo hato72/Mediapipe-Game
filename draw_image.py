@@ -63,6 +63,6 @@ def button(surface, pos_y, text=None, click_sound=None):
                     shadow=True, shadow_color=COLORS["buttons"]["shadow"])
 
     if on_button and pygame.mouse.get_pressed()[0]: # if the user press on the button
-        if click_sound is not None: # play the sound if needed
-            click_sound.play()
+        # if click_sound is not None: # play the sound if needed
+        #     click_sound.play()
         return True

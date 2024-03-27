@@ -78,14 +78,16 @@ class Hand_tracking:
     def hand_tracking(self,image):
 
         image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+        image.flags.writeable = False
         self.results = self.hands.process(image)
 
         image.flags.writeable = True
-        print("hand tracking")
+        image = cv.cvtColor(image, cv.COLOR_RGB2BGR)
+        #print("hand tracking")
 
         #self.hand_close = False
 
-        if self.results.multi_hand_landmarks is not None:
+        if self.results.multi_hand_landmarks:
             for hand_landmarks in self.results.multi_hand_landmarks:
                 joint_x,joint_y = hand_landmarks.landmark[9].x, hand_landmarks.landmark[9].y
 
@@ -112,7 +114,7 @@ class Hand_tracking:
     
     def display_hand(self):
         cv.imshow("image",self.image)
-        key = cv.waitKey(1)
+        cv.waitKey(1)
         # if key == 27:  # ESC
         #     pass
 

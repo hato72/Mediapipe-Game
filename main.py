@@ -11,7 +11,7 @@ screen = pygame.display.set_mode((screen_width,screen_height),0,32)
 
 mainClock = pygame.time.Clock()
 
-#fps_font = pygame.font.SysFont("coopbl", 22)
+fps_font = pygame.font.SysFont("coopbl", 22)
 
 state = "menu"
 
@@ -33,18 +33,20 @@ def update():
     global state
     if state == "menu":
         if menu.update() == "game":
-            game.reset()
+            game.reset() # reset the game to start a new game
             state = "game"
-            pass
-        elif state == "game":
-            if game.update() == "menu":
-                state = "menu"
-            pass
-        pygame.display.update()
-        mainClock.tick(FPS)
+    elif state == "game":
+        if game.update() == "menu":
+            state = "menu"
+    pygame.display.update()
+    mainClock.tick(FPS)
 
 while True:
     events()
 
     update()
+
+    # if DRAW_FPS:
+    #     fps_label = fps_font.render(f"FPS: {int(mainClock.get_fps())}", 1, (255,200,20))
+    #     screen.blit(fps_label, (5,5))
 

@@ -12,9 +12,12 @@ norts_size = (50,40)
 hitbox = False
 
 FPS = 90
+DRAW_FPS = True
 
 anim_speed = 3
 dulation = 60
+spawn_time = 1
+norts_speed = {"min":1,"max":3}
 
 TITLE = "Hand_Tracking_Game"
 
