@@ -9,6 +9,7 @@ from hand_tracking import Hand_tracking
 from background import Background
 from env import *
 import draw_image
+from norts import *
 
 
 class Game:
@@ -16,7 +17,7 @@ class Game:
         self.surface = surface
         self.background = Background()
 
-        #self.norts = Norts(surface)
+        self.norts = Norts(surface)
 
         self.cap = cv2.VideoCapture(0)
         
@@ -39,7 +40,10 @@ class Game:
             # increase the probability that the animation will be a angel or a zombie over time
             #nb = (dulation-self.time_left)/dulation * 100  /50  # increase from 0 to 50 during all  the game (linear)
             if self.time_left < dulation/2:
-                self.animators.append(Norts())
+                self.animators.append(Norts(self.surface))
+                # x = random.randint(0, screen_width)
+                # y = random.randint(0, screen_height)
+                # self.norts.norts.append(Nort(self.surface, x, y))
 
     def load_camera(self):
         _,self.frame = self.cap.read()
@@ -53,8 +57,12 @@ class Game:
     def draw(self):
         self.background.draw(self.surface)
 
-        for animator in self.animators:
-            animator.draw(self.surface)
+        # for animator in self.animators:
+        #     animator.draw(self.surface)
+        for nort in self.norts.norts:
+            nort.move()
+            nort.draw()
+            
 
         self.hand.draw(self.surface)
 
@@ -75,7 +83,7 @@ class Game:
         self.set_hand_position()
         self.game_time_update()
         #norts
-        #self.norts.update()
+        self.norts.update()
 
         self.draw()
 
@@ -88,7 +96,8 @@ class Game:
                 print("hand close")
             self.hand.image = self.hand.orig_image.copy()
             self.score = self.hand.kill_animators(self.animators, self.score)
-            for animator in self.animators:
+
+            for animator in self.norts.norts:
                 animator.move()
 
         else: # when the game is over
