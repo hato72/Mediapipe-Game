@@ -47,6 +47,7 @@ class Game:
 
     def load_camera(self):
         _,self.frame = self.cap.read()
+        self.frame = cv2.flip(self.frame, 1)
         
 
     def set_hand_position(self):

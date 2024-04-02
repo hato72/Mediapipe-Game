@@ -20,7 +20,7 @@ class Norts:
 
     def update(self):
         print("norts update")
-        self.new_norts_timer += pygame.time.get_ticks()
+        self.new_norts_timer += pygame.time.get_ticks()*0.001
         if self.new_norts_timer >= self.new_norts_interval:
             self.new_norts_timer = 0
             x = random.randint(0, screen_width)
