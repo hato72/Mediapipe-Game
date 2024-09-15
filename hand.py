@@ -2,12 +2,11 @@ import pygame
 from draw_image import * 
 import draw_image
 from env import *
-from hand_tracking import Hand_tracking
-import cv2 
+#from hand_tracking import Hand_tracking
 
 class Hand:
     def __init__(self):
-        self.orig_image = draw_image.load("img/hand.png",size=(hand_size,hand_size))
+        self.orig_image = draw_image.load("img/click.png",size=(hand_size,hand_size))
         self.image = self.orig_image.copy()
         #self.image_smaller = image.load
         self.rect = pygame.Rect(screen_width//2,screen_height//2,hand_hitbox[0],hand_hitbox[1])
@@ -43,6 +42,15 @@ class Hand:
                 #     sounds["screaming"].play()
         else:
             self.left_click = False
+        return score
+    
+    def kill_norts(self, norts):
+        score = 0
+        if self.left_click:
+            for nort in norts[:]:  # リストのコピーを使用して反復
+                if self.rect.colliderect(nort.rect):
+                    norts.remove(nort)
+                    score += 1
         return score
 
     

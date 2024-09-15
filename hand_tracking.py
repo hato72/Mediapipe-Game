@@ -1,60 +1,8 @@
-import copy
-import argparse
-
 import cv2 as cv
-import numpy as np
+#import numpy as np
 import mediapipe as mp
 
 from env import *
-
-
-# def get_args():
-#     parser = argparse.ArgumentParser()
-
-#     parser.add_argument("--device", type=int, default=0)
-#     parser.add_argument("--width", help='cap width', type=int, default=960)
-#     parser.add_argument("--height", help='cap height', type=int, default=540)
-
-#     parser.add_argument("--model_complexity",
-#                         help='model_complexity(0,1(default))',
-#                         type=int,
-#                         default=1)
-
-#     parser.add_argument("--max_num_hands", type=int, default=2)
-#     parser.add_argument("--min_detection_confidence",
-#                         help='min_detection_confidence',
-#                         type=float,
-#                         default=0.7)
-#     parser.add_argument("--min_tracking_confidence",
-#                         help='min_tracking_confidence',
-#                         type=int,
-#                         default=0.5)
-
-#     parser.add_argument('--use_brect', action='store_true')
-#     parser.add_argument('--plot_world_landmark', action='store_true')
-
-#     args = parser.parse_args()
-
-#     return args
-
-
-# args = get_args()
-
-# cap_device = args.device
-# cap_width = args.width
-# cap_height = args.height
-
-# model_complexity = args.model_complexity
-# max_num_hands = args.max_num_hands
-# min_detection_confidence = args.min_detection_confidence
-# min_tracking_confidence = args.min_tracking_confidence
-
-# use_brect = args.use_brect
-# plot_world_landmark = args.plot_world_landmark
-
-# cap = cv.VideoCapture(cap_device)
-# cap.set(cv.CAP_PROP_FRAME_WIDTH, cap_width)
-# cap.set(cv.CAP_PROP_FRAME_HEIGHT, cap_height)
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
@@ -76,7 +24,6 @@ class Hand_tracking:
         self.hand_close = False
 
     def hand_tracking(self,image):
-
         image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
         image.flags.writeable = False
         self.results = self.hands.process(image)
@@ -85,7 +32,7 @@ class Hand_tracking:
         image = cv.cvtColor(image, cv.COLOR_RGB2BGR)
         #print("hand tracking")
 
-        #self.hand_close = False
+        self.hand_close = False
 
         if self.results.multi_hand_landmarks:
             for hand_landmarks in self.results.multi_hand_landmarks:
@@ -94,7 +41,7 @@ class Hand_tracking:
                 self.hand_x = int(joint_x * screen_width)
                 self.hand_y = int(joint_y * screen_height)
 
-                tip_x,tip_y = hand_landmarks.landmark[12].x, hand_landmarks.landmark[12].y
+                _,tip_y = hand_landmarks.landmark[12].x, hand_landmarks.landmark[12].y
 
                 if tip_y > joint_y:
                     self.hand_close = True

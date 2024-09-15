@@ -20,6 +20,8 @@ class Game:
         self.norts = Norts(surface)
 
         self.cap = cv2.VideoCapture(0)
+        self.norts_spawn_timer = 0
+        self.norts_spawn_interval = 2  # ノーツが出現する間隔（秒）
         
 
     def reset(self):
@@ -33,17 +35,23 @@ class Game:
         #pass
 
     def spawn_animator(self):
-        t = time.time()
-        if t > self.animators_spawn_timer:
-            self.insects_spawn_timer = t + spawn_time
+        # t = time.time()
+        # if t > self.animators_spawn_timer:
+        #     self.insects_spawn_timer = t + spawn_time
 
-            # increase the probability that the animation will be a angel or a zombie over time
-            #nb = (dulation-self.time_left)/dulation * 100  /50  # increase from 0 to 50 during all  the game (linear)
-            if self.time_left < dulation/2:
-                self.animators.append(Norts(self.surface))
-                # x = random.randint(0, screen_width)
-                # y = random.randint(0, screen_height)
-                # self.norts.norts.append(Nort(self.surface, x, y))
+        #     # increase the probability that the animation will be a angel or a zombie over time
+        #     #nb = (dulation-self.time_left)/dulation * 100  /50  # increase from 0 to 50 during all  the game (linear)
+        #     if self.time_left < dulation/2:
+        #         self.animators.append(Norts(self.surface))
+        #         # x = random.randint(0, screen_width)
+        #         # y = random.randint(0, screen_height)
+        #         # self.norts.norts.append(Nort(self.surface, x, y))
+        t = time.time()
+        if t > self.norts_spawn_timer:
+            self.norts_spawn_timer = t + self.norts_spawn_interval
+            x = random.randint(0, screen_width)
+            y = random.randint(0, screen_height)
+            self.norts.norts.append(Nort(self.surface, x, y))
 
     def load_camera(self):
         _,self.frame = self.cap.read()
@@ -89,17 +97,25 @@ class Game:
         self.draw()
 
         if self.time_left > 0:
+            # self.spawn_animator()
+            # (x, y) = self.hand_tracking.get_hand_center()
+            # self.hand.rect.center = (x, y)
+            # self.hand.left_click = self.hand_tracking.hand_close
+            # if self.hand.left_click:
+            #     print("hand close")
+            # self.hand.image = self.hand.orig_image.copy()
+            # self.score = self.hand.kill_animators(self.animators, self.score)
+            # for animator in self.norts.norts:
+            #     animator.move()
             self.spawn_animator()
             (x, y) = self.hand_tracking.get_hand_center()
             self.hand.rect.center = (x, y)
             self.hand.left_click = self.hand_tracking.hand_close
             if self.hand.left_click:
-                print("hand close")
-            self.hand.image = self.hand.orig_image.copy()
-            self.score = self.hand.kill_animators(self.animators, self.score)
+                self.score += self.hand.kill_norts(self.norts.norts)
 
-            for animator in self.norts.norts:
-                animator.move()
+            for nort in self.norts.norts:
+                nort.move()
 
         else: # when the game is over
             if draw_image.button(self.surface, 320, "Continue"):
