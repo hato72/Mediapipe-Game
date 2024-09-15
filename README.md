@@ -33,8 +33,10 @@ deactivate
 conda create --name [newenvname] python=[pythonのバージョンを指定]
 
 `仮想環境を有効化`
+
 conda activate [newenvname]
 
 `仮想環境を無効化`
+
 conda deactivate
 
