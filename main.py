@@ -1,6 +1,6 @@
 import pygame 
 import sys
-import os 
+#import os 
 from env import *
 from menu import Menu
 from game import Game

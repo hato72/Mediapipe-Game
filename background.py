@@ -1,4 +1,3 @@
-import pygame
 import draw_image
 from env import *
 
