@@ -2,6 +2,9 @@
 pygame × mediapipeで実現
 カメラに映った手を認識し、出現するノーツの上で手を握るとノーツが消えスコアが加算される
 
+## デモ動画
+https://drive.google.com/file/d/1ER3CUdiixTeN-5UqA1OLE00n2LPYIZ9P/view?usp=drive_link
+
 ### 実行
 python main.py
 
