@@ -6,7 +6,7 @@ pygame × mediapipeで実現　以下の2つのゲームを実装
 <!--ゲーム②：カメラに映った手を認識し、出現するノーツの上で手を握るとノーツが消えスコアが加算されるゲーム-->
 
 ### デモ動画
-
+https://drive.google.com/file/d/18pTfchcrfAdixSi72pzEjDutpbIWeYhg/view?usp=drive_link
 
 ### 実行
 python main.py
