@@ -4,6 +4,7 @@ import sys
 from env import *
 from menu import Menu
 from game import Game
+from mole_whack import MoleWhackGame
 
 pygame.init()
 pygame.display.set_caption(TITLE)
@@ -16,7 +17,8 @@ fps_font = pygame.font.SysFont("coopbl", 22)
 state = "menu"
 
 menu = Menu(screen)
-game = Game(screen)
+game1 = Game(screen)
+game2 = MoleWhackGame(screen)
 
 def events():
     for event in pygame.event.get():
@@ -32,11 +34,17 @@ def events():
 def update():
     global state
     if state == "menu":
-        if menu.update() == "game":
-            game.reset() # reset the game to start a new game
-            state = "game"
-    elif state == "game":
-        if game.update() == "menu":
+        if menu.update() == "game1":
+            game1.reset() # reset the game to start a new game
+            state = "game1"
+        if menu.update() == "game2":
+            game2.reset() # reset the game to start a new game
+            state = "game2"
+    elif state == "game1":
+        if game1.update() == "menu":
+            state = "menu"
+    elif state == "game2":
+        if game2.update() == "menu":
             state = "menu"
     pygame.display.update()
     mainClock.tick(FPS)
