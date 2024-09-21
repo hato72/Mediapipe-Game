@@ -16,12 +16,18 @@ class Menu:
     def update(self):
         self.draw()
         
-        if button(self.surface,200,"Start_norts"):
+        if button(self.surface,300,"Start_mole"):
             return "game1"
-        
-        if button(self.surface,350,"Start_mole"):
-            return "game2"
-        
-        if button(self.surface, 360+button_size[1]*1.5, "Quit"):
+        if button(self.surface, 320+button_size[1]*1.5, "Quit"):
             pygame.quit()
             sys.exit()
+        
+        # if button(self.surface,200,"Start_mole"):
+        #     return "game1"
+        
+        # if button(self.surface,350,"Start_norts"):
+        #     return "game2"
+        
+        # if button(self.surface, 360+button_size[1]*1.5, "Quit"):
+        #     pygame.quit()
+        #     sys.exit()

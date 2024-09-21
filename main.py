@@ -5,6 +5,7 @@ from env import *
 from menu import Menu
 from game import Game
 from mole_whack import MoleWhackGame
+from InsectNet import InsectGame
 
 pygame.init()
 pygame.display.set_caption(TITLE)
@@ -17,8 +18,9 @@ fps_font = pygame.font.SysFont("coopbl", 22)
 state = "menu"
 
 menu = Menu(screen)
-game1 = Game(screen)
-game2 = MoleWhackGame(screen)
+game1 = MoleWhackGame(screen)
+game2 = Game(screen)
+game3 = InsectGame(screen)
 
 def events():
     for event in pygame.event.get():
