@@ -1,8 +1,11 @@
-## Touch & Vanish
-pygame × mediapipeで実現
-カメラに映った手を認識し、出現するノーツの上で手を握るとノーツが消えスコアが加算される
+## Mediapipe Game
+pygame × mediapipeで実現　以下の2つのゲームを実装
 
-### デモ動画
+ゲーム①：カメラに映った手を認識し、出現するノーツの上で手を握るとノーツが消えスコアが加算されるゲーム
+
+ゲーム②：カメラに映った手を認識し、手を握るとピコピコハンマーが動き、それがモグラに当たるとスコアが加算されるもぐらたたきゲーム
+
+### ゲーム①デモ動画
 https://drive.google.com/file/d/1ER3CUdiixTeN-5UqA1OLE00n2LPYIZ9P/view?usp=drive_link
 
 ### 実行
