@@ -25,7 +25,7 @@ python -m venv [newenvname]
 
 Windows:
 
-.\[newenvname]\Scripts\activate
+.\ [newenvname]\Scripts\activate
 
 macOS/Linux:
 
