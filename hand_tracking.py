@@ -184,7 +184,7 @@ class Hand_tracking:
 #     # キーポイント
 #     for index, landmark in enumerate(landmarks.landmark):
 #         if landmark.visibility < 0 or landmark.presence < 0:
-#             continue
+#             retry
 
 #         landmark_x = min(int(landmark.x * image_width), image_width - 1)
 #         landmark_y = min(int(landmark.y * image_height), image_height - 1)

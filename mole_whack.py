@@ -170,6 +170,7 @@ class MoleWhackGame:
         self.cap = cv2.VideoCapture(0)
         self.difficulty = 1
         self.game_state = "playing"
+        self.hammer_ready = True  # ハンマーが振れる状態を管理するフラグ
 
         # モグラの穴の位置を設定
         hole_positions = [
@@ -229,16 +230,15 @@ class MoleWhackGame:
             x, y = self.hand_tracking.get_hand_center()
             self.hammer.update(x, y, current_time)
 
-            if self.hand_tracking.hand_close:
+            if self.hand_tracking.hand_close and self.hammer_ready:  # 手を握っていて、ハンマーが振れる状態のとき
                 self.hammer.hit(current_time)
+                self.hammer_ready = False  # ハンマーを振ったので、振れない状態にする
                 for mole in self.moles:
-                    # if mole.visible and self.hammer.rect.colliderect(mole.rect):
-                    #     mole.visible = False
-                    #     self.score += 1
                     if mole.state in ["visible", "appearing"] and self.hammer.rect.colliderect(mole.rect):
                         if mole.hit():
                             self.score += 1
-
+            elif not self.hand_tracking.hand_close:  # 手を広げたとき
+                self.hammer_ready = True  # ハンマーを振れる状態に戻す
 
             # モグラの更新
             # for mole in self.moles:
@@ -258,11 +258,13 @@ class MoleWhackGame:
             # 難易度の更新
             self.difficulty = min(5, 1 + int(game_time / 10))  # 10秒ごとに難易度が上がる、最大5
         else:
-            #return "game_over"
-            if draw_image.button(self.surface, 320, "Continue"):
-                self.reset()
-                return "playing"
-            if draw_image.button(self.surface, 320+button_size[1]*1.5, "Quit"):
+            # ゲームオーバー時に「retry」ボタンを押すとゲームをリセット
+            if draw_image.button(self.surface, 320, "retry"):
+                self.reset()  # ゲームをリセット
+                self.game_start_time = time.time()  # ゲーム開始時間をリセット
+                self.game_state = "playing"  # ゲーム状態を「playing」に設定
+                return "playing"  # ゲームを再開
+            if draw_image.button(self.surface, 320 + button_size[1] * 1.5, "Quit"):
                 pygame.quit()
                 sys.exit()
 
@@ -274,12 +276,12 @@ class MoleWhackGame:
     def draw_menu(self):
         # メニュー画面の表示
         font = pygame.font.Font(None, 36)
-        continue_button = font.render("Continue", True, (255, 255, 255))
+        retry_button = font.render("retry", True, (255, 255, 255))
         quit_button = font.render("Quit", True, (255, 255, 255))
 
         # 続けるボタン
-        continue_rect = continue_button.get_rect(center=(400, 250))
-        self.surface.blit(continue_button, continue_rect)
+        retry_rect = retry_button.get_rect(center=(400, 250))
+        self.surface.blit(retry_button, retry_rect)
 
         # Quitボタン
         quit_rect = quit_button.get_rect(center=(400, 350))
@@ -288,7 +290,7 @@ class MoleWhackGame:
         # マウスクリック処理
         mouse_pos = pygame.mouse.get_pos()
         if pygame.mouse.get_pressed()[0]:
-            if continue_rect.collidepoint(mouse_pos):
+            if retry_rect.collidepoint(mouse_pos):
                 self.game_state = "playing"  # ゲーム再開
             elif quit_rect.collidepoint(mouse_pos):
                 pygame.quit()

@@ -118,7 +118,7 @@ class Game:
                 nort.move()
 
         else: # when the game is over
-            if draw_image.button(self.surface, 320, "Continue"):
+            if draw_image.button(self.surface, 320, "retry"):
                 return "menu"
             if draw_image.button(self.surface, 320+button_size[1]*1.5, "Quit"):
                 pygame.quit()
