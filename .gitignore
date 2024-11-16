@@ -1,2 +1,5 @@
 read.md
 /__pycache__/
+/build/
+/img/
+main.spec
